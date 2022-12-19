@@ -19,6 +19,8 @@ public class SupplyChain extends Application {
 
     public static final int width = 700,height = 600, headerBar =50;
     Pane bodyPane = new Pane();
+
+
     Login login = new Login();
 
     productDetails productDetails = new productDetails();
@@ -26,13 +28,24 @@ public class SupplyChain extends Application {
     private GridPane headerBar() {
         TextField searchText = new TextField();
         Button searchButton = new Button("search");
+        searchButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+               String productName = searchText.getText();
+
+
+               bodyPane.getChildren().clear();
+
+               bodyPane.getChildren().add(productDetails.getProductBYName(productName));
+            }
+        });
 
         GridPane gridPane = new GridPane();
 //        gridPane.setMinSize();
         gridPane.setMinSize(bodyPane.getMinWidth(), headerBar -10);
         gridPane.setVgap(5);
         gridPane.setHgap(5);
-//        gridPane.setStyle("-fx-background-color : #C0C0C0");
+        gridPane.setStyle("-fx-background-color : blue");
         gridPane.setVgap(5);
         gridPane.setHgap(5);
 
