@@ -24,6 +24,10 @@ public class SupplyChain extends Application {
     Login login = new Login();
 
     productDetails productDetails = new productDetails();
+    Button globalLogin;
+    Label customerEmail = null;
+
+    String customer_Email = null;
 
     private GridPane headerBar() {
         TextField searchText = new TextField();
@@ -40,6 +44,20 @@ public class SupplyChain extends Application {
             }
         });
 
+        globalLogin = new Button("Log In");
+        globalLogin.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                bodyPane.getChildren().clear();
+                bodyPane.getChildren().add(loginPage());
+
+            }
+        });
+
+        customerEmail = new Label("Welcome User");
+
+
+
         GridPane gridPane = new GridPane();
 //        gridPane.setMinSize();
         gridPane.setMinSize(bodyPane.getMinWidth(), headerBar -10);
@@ -53,6 +71,8 @@ public class SupplyChain extends Application {
 
         gridPane.add(searchText,0,0);
         gridPane.add(searchButton,1,0);
+        gridPane.add(globalLogin,2,0);
+        gridPane.add(customerEmail,3,0);
 
         return gridPane;
     }
@@ -78,6 +98,11 @@ public class SupplyChain extends Application {
                 if(login.customerLogin(email,password))
                 {
                     messageLabel.setText("login Succesfull");
+                    customer_Email = email;
+                    globalLogin.setDisable(true);
+                    customerEmail.setText("Welcome : "+ customer_Email);
+                    bodyPane.getChildren().clear();
+                    bodyPane.getChildren().add(productDetails.getAllProduct());
                 }
                 else {
                     messageLabel.setText("Login fail");
