@@ -72,9 +72,18 @@ public class productDetails {
         tablePane.getChildren().add(productTable);
         return tablePane;
 
-
     }
 
-
+    public product getSelectedProduct()
+    {
+        try {
+            product selectedProduct = productTable.getSelectionModel().getSelectedItem();
+            return selectedProduct;
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

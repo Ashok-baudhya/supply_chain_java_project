@@ -128,15 +128,52 @@ public class SupplyChain extends Application {
         return gridPane;
   }
 
+    private GridPane footerBar() {
+
+        Button addToCartButton = new Button("Add to Cart");
+        Button buyNowButton = new Button("Buy Now");
+
+        Label messageLabel = new Label("");
+        buyNowButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                    product selectedProduct = productDetails.getSelectedProduct();
+                    if(Order.placeOrder(customer_Email,selectedProduct))
+                    {
+                        messageLabel.setText("Ordered");
+                    }
+                    else {
+                        messageLabel.setText("order fail");
+                    }
+            }
+        });
+
+        GridPane gridPane = new GridPane();
+//        gridPane.setMinSize();
+        gridPane.setMinSize(bodyPane.getMinWidth(), headerBar -10);
+        gridPane.setVgap(5);
+        gridPane.setHgap(50);
+
+
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setTranslateY(headerBar+height+5);
+
+        gridPane.add(addToCartButton,0,0);
+        gridPane.add(buyNowButton,1,0);
+        gridPane.add(messageLabel,2,0);
+
+        return gridPane;
+    }
+
     private  Pane createContent(){
         Pane root = new Pane();
-        root.setPrefSize(width,height+headerBar);
+        root.setPrefSize(width,height+2*headerBar);
 
         bodyPane.setMinSize(width,height);
         bodyPane.setTranslateY(headerBar);
 
         bodyPane.getChildren().addAll(productDetails.getAllProduct());
-        root.getChildren().addAll(headerBar(), bodyPane);
+        root.getChildren().addAll(headerBar(), bodyPane,footerBar());
 
         return root;
 
@@ -144,7 +181,7 @@ public class SupplyChain extends Application {
     public void start(Stage stage) throws IOException {
 //        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(createContent());
-        stage.setTitle("Hello!");
+        stage.setTitle("Supply_chain");
         stage.setScene(scene);
         stage.show();
     }

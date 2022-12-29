@@ -61,7 +61,7 @@ public class Login {
 
     public static void main(String[] args) {
         Login login = new Login();
-        System.out.println(login.getEncryptedPassword("1234"));
+//        System.out.println(login.getEncryptedPassword("1234"));
     }
 
 
